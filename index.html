@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Spin & Win</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            width: 100%;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .welcome {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #ffcc00;
+        }
+        
+        .date {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #ffcc00;
+        }
+        
+        .wheel-container {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            margin: 30px auto;
+        }
+        
+        .wheel {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+            border: 10px solid #ffcc00;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 204, 0, 0.5);
+            transition: transform 5s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+            background: #fff;
+        }
+        
+        .section {
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            transform-origin: bottom right;
+            left: 0;
+            top: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            clip-path: polygon(0 0, 100% 0, 100% 100%);
+        }
+        
+        .section-content {
+            transform: rotate(45deg);
+            text-align: center;
+            width: 80px;
+            font-weight: bold;
+        }
+        
+        .section i {
+            font-size: 24px;
+            margin-bottom: 5px;
+            display: block;
+        }
+        
+        .spin-button {
+            background: linear-gradient(to right, #ff416c, #ff4b2b);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            font-size: 1.4rem;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 40px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .spin-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+        
+        .spin-button:active {
+            transform: translateY(1px);
+        }
+        
+        .pointer {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 50px;
+            background: #ff416c;
+            clip-path: polygon(50% 100%, 0 0, 100% 0);
+            z-index: 10;
+        }
+        
+        .result {
+            margin-top: 30px;
+            font-size: 1.8rem;
+            text-align: center;
+            min-height: 80px;
+            color: #ffcc00;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        
+        .form-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            margin-top: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: none;
+        }
+        
+        .form-title {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            color: #ffcc00;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            border: none;
+            background: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(to right, #00b09b, #96c93d);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .confirmation {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 1.4rem;
+            display: none;
+            color: #00b09b;
+        }
+        
+        .prizes {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .prize-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            width: 150px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .prize-item i {
+            font-size: 40px;
+            margin-bottom: 10px;
+            color: #ffcc00;
+        }
+        
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            padding: 20px;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+        }
+        
+        @media (max-width: 768px) {
+            .wheel-container {
+                width: 300px;
+                height: 300px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .welcome {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Premium Spin & Win</h1>
+            <div class="welcome">ආයුබෝවන්! දුලංජලී කෞෂල්‍යා</div>
+            <div class="date">2025 වසර</div>
+            <p>රෝදය කරකැවීමෙන් අපගේ විශේෂ ත්‍යාග ලබාගන්න</p>
+        </header>
+        
+        <div class="wheel-container">
+            <div class="pointer"></div>
+            <div class="wheel" id="wheel">
+                <!-- Wheel sections will be generated by JavaScript -->
+            </div>
+        </div>
+        
+        <button class="spin-button" id="spin-btn">රෝදය කරකවන්න</button>
+        
+        <div class="result" id="result"></div>
+        
+        <div class="form-container" id="form-container">
+            <div class="form-title">ඔබගේ තොරතුරු ඇතුළත් කරන්න</div>
+            <form id="details-form">
+                <div class="input-group">
+                    <label for="name">නම</label>
+                    <input type="text" id="name" required placeholder="ඔබගේ පුර්ණ නම">
+                </div>
+                <div class="input-group">
+                    <label for="phone">දුරකථන අංකය</label>
+                    <input type="tel" id="phone" required placeholder="ඔබගේ දුරකථන අංකය">
+                </div>
+                <div class="input-group">
+                    <label for="address">ලිපිනය</label>
+                    <input type="text" id="address" required placeholder="ඔබගේ සම්පුර්ණ ලිපිනය">
+                </div>
+                <button type="submit" class="submit-btn">ත්‍යාගය ලබාගන්න</button>
+            </form>
+        </div>
+        
+        <div class="confirmation" id="confirmation">
+            <i class="fas fa-check-circle"></i>
+            <p>ඔබගේ තොරතුරු යවා ඇත! ඉක්මනින් ඔබව සම්බන්ධ කරගනු ලැබේ.</p>
+        </div>
+        
+        <div class="prizes">
+            <div class="prize-item">
+                <i class="fas fa-mobile-alt"></i>
+                <h3>සමාර්තු දුරකථන</h3>
+            </div>
+            <div class="prize-item">
+                <i class="fas fa-laptop"></i>
+                <h3>ලැප්ටොප්</h3>
+            </div>
+            <div class="prize-item">
+                <i class="fas fa-clock"></i>
+                <h3>ස්මාර්ට් ඔරලෝසුව</h3>
+            </div>
+            <div class="prize-item">
+                <i class="fas fa-money-bill-wave"></i>
+                <h3>මුදල් ත්‍යාග</h3>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2025 Premium Spin & Win. සියලුම හිමිකම් ඇවිරිණි.</p>
+            <p>ත්‍යාග ලබාගැනීමේ අවස්ථාව එක් වතාවක් පමණක්</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const wheel = document.getElementById('wheel');
+            const spinBtn = document.getElementById('spin-btn');
+            const result = document.getElementById('result');
+            const formContainer = document.getElementById('form-container');
+            const confirmation = document.getElementById('confirmation');
+            const detailsForm = document.getElementById('details-form');
+            
+            // Prizes for the wheel sections
+            const prizes = [
+                { icon: 'fa-mobile-alt', name: 'සමාර්තු දුරකථන', color: '#FF6B6B' },
+                { icon: 'fa-laptop', name: 'ලැප්ටොප්', color: '#4ECDC4' },
+                { icon: 'fa-clock', name: 'ස්මාර්ට් ඔරලෝසුව', color: '#FFD166' },
+                { icon: 'fa-money-bill-wave', name: 'රු. 10,000', color: '#06D6A0' },
+                { icon: 'fa-mobile-alt', name: 'සමාර්තු දුරකථන', color: '#118AB2' },
+                { icon: 'fa-laptop', name: 'ලැප්ටොප්', color: '#073B4C' },
+                { icon: 'fa-clock', name: 'ස්මාර්ට් ඔරලෝසුව', color: '#FF9E00' },
+                { icon: 'fa-money-bill-wave', name: 'රු. 5,000', color: '#7209B7' },
+                { icon: 'fa-mobile-alt', name: 'සමාර්තු දුරකථන', color: '#F72585' },
+                { icon: 'fa-laptop', name: 'ලැප්ටොප්', color: '#4CC9F0' }
+            ];
+            
+            let currentPrize = null;
+            let spinning = false;
+            
+            // Create wheel sections
+            function createWheelSections() {
+                const sectionAngle = 360 / prizes.length;
+                
+                prizes.forEach((prize, index) => {
+                    const section = document.createElement('div');
+                    section.className = 'section';
+                    section.style.transform = `rotate(${index * sectionAngle}deg)`;
+                    section.style.backgroundColor = prize.color;
+                    
+                    const sectionContent = document.createElement('div');
+                    sectionContent.className = 'section-content';
+                    sectionContent.innerHTML = `<i class="fas ${prize.icon}"></i> ${prize.name}`;
+                    
+                    section.appendChild(sectionContent);
+                    wheel.appendChild(section);
+                });
+            }
+            
+            // Spin the wheel
+            spinBtn.addEventListener('click', () => {
+                if (spinning) return;
+                
+                spinning = true;
+                result.textContent = '';
+                formContainer.style.display = 'none';
+                confirmation.style.display = 'none';
+                
+                // Random rotation between 5 and 10 full rotations plus offset
+                const degrees = 1800 + Math.floor(Math.random() * 1800);
+                wheel.style.transform = `rotate(${degrees}deg)`;
+                
+                // Calculate which prize was selected
+                setTimeout(() => {
+                    const sectionAngle = 360 / prizes.length;
+                    const actualDegrees = degrees % 360;
+                    const normalizedDegrees = (360 - actualDegrees) % 360; // Normalize to 0-360
+                    const prizeIndex = Math.floor(normalizedDegrees / sectionAngle);
+                    
+                    currentPrize = prizes[prizeIndex];
+                    result.innerHTML = `සුභ පැතුම්! ඔබ දිනාගත්තේ: <strong>${currentPrize.name}</strong>`;
+                    
+                    // Show form after a delay
+                    setTimeout(() => {
+                        formContainer.style.display = 'block';
+                        formContainer.scrollIntoView({ behavior: 'smooth' });
+                    }, 2000);
+                    
+                    spinning = false;
+                }, 5000);
+            });
+            
+            // Handle form submission
+            detailsForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const name = document.getElementById('name').value;
+                const phone = document.getElementById('phone').value;
+                const address = document.getElementById('address').value;
+                
+                // Format WhatsApp message
+                const message = `*ත්‍යාග දිනුම් ඇඳීම*%0A%0Aනම: ${name}%0Aදුරකථන: ${phone}%0Aලිපිනය: ${address}%0A%0Aදිනූ ත්‍යාගය: ${currentPrize.name}`;
+                
+                // Open WhatsApp with pre-filled message
+                window.open(`https://wa.me/94741039941?text=${message}`, '_blank');
+                
+                // Show confirmation
+                formContainer.style.display = 'none';
+                confirmation.style.display = 'block';
+                confirmation.scrollIntoView({ behavior: 'smooth' });
+                
+                // Reset form
+                detailsForm.reset();
+            });
+            
+            // Initialize the wheel
+            createWheelSections();
+        });
+    </script>
+</body>
+</html>
